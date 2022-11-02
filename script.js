@@ -28,8 +28,3 @@ function operate(operator, a, b) {
     }
     return func(a, b);
 }
-// for (let i = 1; i < 10; i++) {
-//     let button = document.createElement("button");
-//     button.textContent = i;
-//     document.body.appendChild(button);
-// }

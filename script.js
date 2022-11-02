@@ -14,20 +14,20 @@ function multiply() {
 function divide(a, b) {
     return a / b;
 }
-// function operate(operator, a, b) {
-//     let func = function () { };
-//     switch (operator) {
-//         case "+":
-//             func = add;
-//         case "-":
-//             func = subtract;
-//         case "*":
-//             func = multiply;
-//         case "/":
-//             func = divide;
-//     }
-//     return func(a, b);
-// }
+function operate(operator, a, b) {
+    let func = function () { };
+    switch (operator) {
+        case "+":
+            func = add;
+        case "-":
+            func = subtract;
+        case "*":
+            func = multiply;
+        case "/":
+            func = divide;
+    }
+    return func(a, b);
+}
 // for (let i = 1; i < 10; i++) {
 //     let button = document.createElement("button");
 //     button.textContent = i;

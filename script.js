@@ -41,7 +41,12 @@ let operation, number1, number2;
 numbers.forEach((number) => number.addEventListener("click", (e) => {
     if (display.innerText == "0") display.innerText = "";
     // ensures that the user can't type more than one "."
-    if (e.target.innerText == "." && display.innerText.replace(`${number1}`, '').includes(".")) return;
+    if (e.target.innerText == ".") {
+        if (number1) {
+            let num = number1.toString().replace("0.", ".");
+            if (display.innerText.replace(`${num}`, '').includes(".")) return;
+        }
+    }
     display.innerText += e.target.innerText;
 }));
 // deals with what to do when operation keys are pressed
@@ -72,8 +77,6 @@ function getNumber2() {
         number1 = Number(display.innerText);
         operation = null;
     }
-
-
 }
 const clear = document.querySelector("#clear");
 clear.addEventListener("click", () => {

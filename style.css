@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui {
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+}
+
+#display {
+    font-size: xx-large;
+}
+
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+
+.container button {
+    flex: 1 0 25%;
+}
+
+button {
+    padding: 28px;
+}

@@ -34,33 +34,46 @@ function operate(operator, a, b) {
     }
     return Math.round((func(a, b) * 100)) / 100;
 }
+// deals with what to do when numbers are pressed
 const numbers = document.querySelectorAll(".number");
 const display = document.querySelector("#display");
 let operation, number1, number2;
-
 numbers.forEach((number) => number.addEventListener("click", (e) => {
     if (display.innerText == "0") display.innerText = "";
+    // ensures that the user can't type more than one "."
+    if (e.target.innerText == "." && display.innerText.replace(`${number1}`, '').includes(".")) return;
     display.innerText += e.target.innerText;
 }));
+// deals with what to do when operation keys are pressed
 const operations = document.querySelectorAll(".operation");
+const history = document.querySelector("#history");
 operations.forEach((o) => o.addEventListener("click", (e) => {
     if (e.target.innerText == "=") {
-        getNumber2(e);
-    }else if(operation){
-        getNumber2(e);
+        getNumber2();
+    } else if (operation) {
+        getNumber2();
         getNumber1(e);
     } else {
         getNumber1(e);
     }
 }));
-function getNumber1(e){
+function getNumber1(e) {
+    //swaps the operation
+    if (display.innerText.toString().match(/[+\-*/]/g)) backspace();
     number1 = Number(display.innerText);
-    display.innerText += e.target.innerText;
     operation = e.target.innerText;
+    display.innerText += operation;
 }
-function getNumber2(e){
+function getNumber2() {
     number2 = Number(display.innerText.split(/[+\-*/]/g)[1]);
-    display.innerText = operate(operation, number1, number2);
+    if (number2) {
+        history.innerText = display.innerText;
+        display.innerText = operate(operation, number1, number2);
+        number1 = Number(display.innerText);
+        operation = null;
+    }
+
+
 }
 const clear = document.querySelector("#clear");
 clear.addEventListener("click", () => {
@@ -69,3 +82,8 @@ clear.addEventListener("click", () => {
     number2 = 0;
     operation = "";
 })
+function backspace() {
+    display.textContent = display.textContent
+        .toString()
+        .slice(0, -1)
+}

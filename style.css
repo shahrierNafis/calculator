@@ -15,16 +15,24 @@ body {
     font-size: xx-large;
 }
 
-.container {
+.container1 {
+    display: flex;
+}
+
+.container1 button {
+    flex-grow: 1;
+}
+
+.container2 {
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
 }
 
-.container button {
+.container2 button {
     flex: 1 0 25%;
 }
 
 button {
-    padding: 28px;
+    padding: 16px;
 }

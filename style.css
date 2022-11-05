@@ -41,23 +41,23 @@ button:hover {
     color: white;
 }
 
-.container1 {
+.container {
     display: flex;
 }
 
-.container1 button {
+.container button {
     flex-grow: 1;
     background-color: red;
     font-weight: bolder;
     color: white;
 }
 
-.container2 {
+.keys {
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
 }
 
-.container2 button {
+.keys button {
     flex: 1 0 25%;
 }

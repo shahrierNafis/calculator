@@ -35,58 +35,48 @@ function operate(operator, a, b) {
     return Math.round((func(a, b) * 100)) / 100;
 }
 // deals with what to do when numbers are pressed
-const numbers = document.querySelectorAll(".number");
+const keys = document.querySelectorAll(".keys button");
 const display = document.querySelector("#display");
-let operation, number1, number2;
-numbers.forEach((number) => number.addEventListener("click", (e) => {
-    if (display.innerText == "0") display.innerText = "";
-    // ensures that the user can't type more than one "."
-    if (e.target.innerText == ".") {
-        if (number1) {
-            let num = number1.toString();
-            if (num.substring(0, 2) == "0.") {
-                num = num.replace("0.", ".");
-            }
-            if (display.innerText.replace(`${num}`, '').includes(".")) return;
+const history = document.querySelector("#history");
+const clear = document.querySelector("#clear");
+keys.forEach((key => key.addEventListener("click", (e) => {
+    if (key.textContent == "=") { evaluate(); return; }
+    else if (key.textContent.match(/[+\-*/]/)) {
+        if (display.innerText.substring(1).match(/[+\-*/]/)) {
+            if (display.innerText.substring(1, text.length - 1).match(/[+\-*/]/)) return;
+            evaluate();
         }
     }
-    display.innerText += e.target.innerText;
-}));
-// deals with what to do when operation keys are pressed
-const operations = document.querySelectorAll(".operation");
-const history = document.querySelector("#history");
-operations.forEach((o) => o.addEventListener("click", (e) => {
-    if (e.target.innerText == "=") {
-        getNumber2();
-    } else if (operation) {
-        getNumber2();
-        getNumber1(e);
-    } else {
-        getNumber1(e);
+    else if (key.textContent.match(/[1-9]/)) {
+        if (display.innerText == "0") {
+            display.innerText = "";
+        }
     }
-}));
-function getNumber1(e) {
-    //swaps the operation
-    if (display.innerText.toString().match(/[+\-*/]/g)) backspace();
-    number1 = Number(display.innerText);
-    operation = e.target.innerText;
-    display.innerText += operation;
-}
-function getNumber2() {
-    number2 = Number(display.innerText.split(/[+\-*/]/g)[1]);
-    if (number2) {
-        history.innerText = display.innerText;
-        display.innerText = operate(operation, number1, number2);
-        number1 = Number(display.innerText);
-        operation = null;
+    else if (key.textContent == ".") {
+        if (evaluate(1)[1]) {
+            if (evaluate(1)[1].includes(".")) return;
+        } else if (evaluate(1)[0].includes(".")) return;
     }
+    display.innerText += key.textContent;
+})))
+function evaluate(p) {
+    let firstChar = display.innerText.substring(0, 1);
+    let rest = display.innerText.substring(1);
+    let [a, b] = rest.split(/[+\-*/]/);
+    a = firstChar + a;
+    let operator = display.innerText.replace(`${a}`, '').replace(`${b}`, '')
+    if (p) return [a, b, operator];
+    history.innerText = display.innerText;
+    display.innerText = operate(operator, Number(a), Number(b));
+    console.table(a)
+    console.log(b);
+    console.log(operator)
 }
-const clear = document.querySelector("#clear");
 clear.addEventListener("click", () => {
     display.innerText = "0";
     number1 = 0;
     number2 = 0;
-    operation = "";
+    operator = "";
 })
 function backspace() {
     display.textContent = display.textContent

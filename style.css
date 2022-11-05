@@ -3,16 +3,20 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .ui {
-    background-color: gray;
+    background-color: white;
     display: flex;
     flex-direction: column;
+    border: 8px solid white;
+    border-radius: 8px;
 }
 
 #display {
     font-size: xx-large;
+    border: 1px solid gray;
 }
 
 .container1 {
@@ -21,6 +25,9 @@ body {
 
 .container1 button {
     flex-grow: 1;
+    background-color: red;
+    font-weight: bolder;
+    color: white;
 }
 
 .container2 {
@@ -35,4 +42,10 @@ body {
 
 button {
     padding: 16px;
+    border-width: 0;
+}
+
+button:hover {
+    background-color: gray;
+    color: white;
 }

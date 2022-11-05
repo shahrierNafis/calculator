@@ -43,7 +43,10 @@ numbers.forEach((number) => number.addEventListener("click", (e) => {
     // ensures that the user can't type more than one "."
     if (e.target.innerText == ".") {
         if (number1) {
-            let num = number1.toString().replace("0.", ".");
+            let num = number1.toString();
+            if (num.substring(0, 2) == "0.") {
+                num = num.replace("0.", ".");
+            }
             if (display.innerText.replace(`${num}`, '').includes(".")) return;
         }
     }

@@ -1,20 +1,53 @@
-function add(a, b) {
-    return a + b;
+const keys = document.querySelectorAll(".keys button");
+const display = document.querySelector("#display");
+const history = document.querySelector("#history");
+const clear = document.querySelector("#clear");
+let operator, number1, number2;
+keys.forEach((key => key.addEventListener("click", (e) => {
+    if (key.textContent == "=") { evaluate(); return; }
+    else if (key.textContent.match(/[+\-*/]/)) {
+        updateValues();
+        if (operator && number1 && number2) {
+            evaluate();
+        }
+        if (operator) return;
+        console.log(operator)
+    }
+    else if (key.textContent.match(/[1-9]/)) {
+        if (display.innerText == "0") {
+            display.innerText = "";
+        }
+    }
+    else if (key.textContent == ".") {
+        if (number2) {
+            if (number2.includes(".")) return;
+        } else if (number1.includes(".")) return;
+    }
+    display.innerText += key.textContent;
+})))
+clear.addEventListener("click", () => {
+    display.innerText = "0";
+    number1 = 0;
+    number2 = 0;
+    operator = "";
+})
+function add(number1, number2) {
+    return number1 + number2;
 }
-function subtract(a, b) {
-    return a - b;
+function subtract(number1, number2) {
+    return number1 - number2;
 }
-function multiply(a, b) {
-    return a * b;
+function multiply(number1, number2) {
+    return number1 * number2;
 }
-function divide(a, b) {
-    if (b == 0) {
+function divide(number1, number2) {
+    if (number2 == 0) {
         alert("You can't divide by 0!");
         return 0;
     };
-    return a / b;
+    return number1 / number2;
 }
-function operate(operator, a, b) {
+function operate(operator, number1, number2) {
     let func = function () { };
     switch (operator) {
         case "+":
@@ -32,52 +65,21 @@ function operate(operator, a, b) {
         default:
             return "error";
     }
-    return Math.round((func(a, b) * 100)) / 100;
+    return Math.round((func(number1, number2) * 100)) / 100;
 }
-// deals with what to do when numbers are pressed
-const keys = document.querySelectorAll(".keys button");
-const display = document.querySelector("#display");
-const history = document.querySelector("#history");
-const clear = document.querySelector("#clear");
-keys.forEach((key => key.addEventListener("click", (e) => {
-    if (key.textContent == "=") { evaluate(); return; }
-    else if (key.textContent.match(/[+\-*/]/)) {
-        if (display.innerText.substring(1).match(/[+\-*/]/)) {
-            if (display.innerText.substring(1, text.length - 1).match(/[+\-*/]/)) return;
-            evaluate();
-        }
-    }
-    else if (key.textContent.match(/[1-9]/)) {
-        if (display.innerText == "0") {
-            display.innerText = "";
-        }
-    }
-    else if (key.textContent == ".") {
-        if (evaluate(1)[1]) {
-            if (evaluate(1)[1].includes(".")) return;
-        } else if (evaluate(1)[0].includes(".")) return;
-    }
-    display.innerText += key.textContent;
-})))
-function evaluate(p) {
+function evaluate() {
+    updateValues();
+    history.innerText = display.innerText;
+    display.innerText = operate(operator, Number(number1), Number(number2));
+    updateValues();
+}
+function updateValues() {
     let firstChar = display.innerText.substring(0, 1);
     let rest = display.innerText.substring(1);
-    let [a, b] = rest.split(/[+\-*/]/);
-    a = firstChar + a;
-    let operator = display.innerText.replace(`${a}`, '').replace(`${b}`, '')
-    if (p) return [a, b, operator];
-    history.innerText = display.innerText;
-    display.innerText = operate(operator, Number(a), Number(b));
-    console.table(a)
-    console.log(b);
-    console.log(operator)
+    [number1, number2] = rest.split(/[+\-*/]/);
+    number1 = firstChar + number1;
+    operator = display.innerText.replace(`${number1}`, '').replace(`${number2}`, '');
 }
-clear.addEventListener("click", () => {
-    display.innerText = "0";
-    number1 = 0;
-    number2 = 0;
-    operator = "";
-})
 function backspace() {
     display.textContent = display.textContent
         .toString()

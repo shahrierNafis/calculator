@@ -19,9 +19,15 @@ keys.forEach((key => key.addEventListener("click", (e) => {
         }
     }
     else if (key.textContent == ".") {
-        if (number2) {
-            if (number2.includes(".")) return;
-        } else if (number1.includes(".")) return;
+        updateValues();
+        if (operator) {
+            if (number2.includes(".")) {
+                return;
+            }
+        }
+        else if (number1.includes(".")) {
+            return;
+        }
     }
     display.innerText += key.textContent;
 })))
@@ -74,8 +80,8 @@ function evaluate() {
     updateValues();
 }
 function updateValues() {
-    let firstChar = display.innerText.substring(0, 1);
-    let rest = display.innerText.substring(1);
+    const firstChar = display.innerText.substring(0, 1);
+    const rest = display.innerText.substring(1);
     [number1, number2] = rest.split(/[+\-*/]/);
     number1 = firstChar + number1;
     operator = display.innerText.replace(`${number1}`, '').replace(`${number2}`, '');

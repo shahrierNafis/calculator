@@ -6,17 +6,39 @@ body {
     background-color: black;
 }
 
+button {
+    padding: 16px;
+    border-width: 0;
+}
+
+button:hover {
+    background-color: gray;
+    color: white;
+}
+
+@font-face {
+    font-family: Calculator;
+    src: url(Calculator.ttf);
+}
+
 .ui {
-    background-color: white;
+    background-color: black;
     display: flex;
     flex-direction: column;
     border: 8px solid white;
     border-radius: 8px;
 }
 
+#history {
+    font-family: Calculator;
+    color: white;
+}
+
 #display {
     font-size: xx-large;
     border: 1px solid gray;
+    font-family: Calculator;
+    color: white;
 }
 
 .container1 {
@@ -38,14 +60,4 @@ body {
 
 .container2 button {
     flex: 1 0 25%;
-}
-
-button {
-    padding: 16px;
-    border-width: 0;
-}
-
-button:hover {
-    background-color: gray;
-    color: white;
 }
